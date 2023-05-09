@@ -44,3 +44,22 @@ useState<never[]>(initialState: never[] | (() => never[])):
 ```
  
  > So in technical terms `useState` is a _generic function_, where the type has to be specified as a type parameter in those cases when the `compiler can not infer the type`.
+
+
+ #### Create new note , and add it to the `Notes Array` 
+
+
+ ```javascript 
+    const onFormSubmit =(event:React.FormEvent) => {
+  
+      event.preventDefault();
+      
+    setNotes(notes.concat({content:newNote,
+        id:getNextId(notes.map(note => note.id))}) 
+      )
+      // clear the note
+      setNewNote('')
+  
+     
+    }
+```
