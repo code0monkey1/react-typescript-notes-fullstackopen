@@ -47,19 +47,20 @@ useState<never[]>(initialState: never[] | (() => never[])):
 
 
  #### Create new note , and add it to the `Notes Array` 
-
+  
+  > One can find all the return types for various actions over here : [React Types Cheet Sheat](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events/ "react types")
 
  ```javascript 
     const onFormSubmit =(event:React.FormEvent) => {
   
       event.preventDefault();
       
-    setNotes(notes.concat({content:newNote,
+      setNotes(notes.concat({content:newNote,
         id:getNextId(notes.map(note => note.id))}) 
       )
+
       // clear the note
       setNewNote('')
-  
      
     }
 ```

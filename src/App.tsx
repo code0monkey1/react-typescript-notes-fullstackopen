@@ -11,21 +11,25 @@ function App() {
     content:"Hello"
   }]);
  
-
+ // This is a FormEvent type 
   const onFormSubmit =(event:React.FormEvent) => {
 
     event.preventDefault();
     
-  setNotes(notes.concat({content:newNote,
-      id:getNextId(notes.map(note => note.id))}) 
-    )
+    const latestNote ={
+       content:newNote,
+      id:getNextId(notes.map(note => note.id))
+      }
+
+    setNotes(notes.concat(latestNote))
+    
     // clear the note
     setNewNote('')
 
    
   }
   return (
-   <>  
+   <div style={{padding:"2rem"}}>  
    <form onSubmit={onFormSubmit}>
         <input
           value={newNote}
@@ -38,7 +42,7 @@ function App() {
         notes.map(note =><li key={note.id}>{note.content}</li>)
        }
     </ol>
-    </>
+    </div>
   );
 }
 
