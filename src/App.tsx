@@ -1,10 +1,19 @@
-import { useState } from 'react';
-
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { Note } from './types';
 import { getNextId } from './utils';
 
-function App() {
+const App = () => {
+  // ...
+  useEffect(() => {
+    axios
+    .get<Note[]>('http://localhost:3001/notes')
+    .then(response => {
+      console.log(response.data);
+    })
+  }, [])
+  // ...
   const [newNote,setNewNote] = useState('')
   const [notes,setNotes] = useState<Note[]>([{
     id:1,
