@@ -8,9 +8,10 @@ const App = () => {
   // ...
   useEffect(() => {
     axios
-    .get<Note[]>('http://localhost:3001/notes')
+    .get<Note[]>('https://641fef8182bea25f6df72478.mockapi.io/api/v1/notes')
     .then(response => {
       console.log(response.data);
+      setNotes(response.data);
     })
   }, [])
   // ...
