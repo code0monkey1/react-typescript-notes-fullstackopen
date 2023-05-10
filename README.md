@@ -64,3 +64,7 @@ useState<never[]>(initialState: never[] | (() => never[])):
      
     }
 ```
+
+### Using Axios with React-Typescript .
+
+>Just like `useState` also `axios.get` is a generic function.
