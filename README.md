@@ -93,3 +93,32 @@ useState<never[]>(initialState: never[] | (() => never[])):
 
 > I.E : you're explicitly asserting the type to be Note , but you don't know if what you've got is a Note type !! 
  
+> **We should prepare for surprises and parse the response data in the frontend similarly that we did in the previous section for the requests to the backend.** 
+>    
+> 
+> _Like So :_
+> ```javascript
+        export const isArrayOfNotes =(arr:unknown[]):arr is Array<Note> =>{
+      
+           arr.forEach( (note:unknown )=> {
+                     
+                if(!isNote(note,'note')){
+        
+                          return false;
+                          
+                }
+        
+             })
+        
+             return true;
+        }
+      ------
+        const data = await getAllNotes();
+
+           if(!(data instanceof Array) || !isArrayOfNotes(data)) {
+            throw new Error("Date received is not an array of Notes"+
+            JSON.stringify(data,null,2));
+          }
+
+          setNotes(data);
+   ```

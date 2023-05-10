@@ -1,9 +1,9 @@
-import axios from 'axios';
+
 import { useEffect, useState } from 'react';
 import './App.css';
-import { getAllNotes } from './services/noteService';
+import { createNote, getAllNotes } from './services/noteService';
 import { Note } from './types';
-import { getNextId, isArrayOfNotes } from './utils';
+import { isArrayOfNotes } from './utils';
 
 
 const App = () => {
@@ -46,21 +46,33 @@ const App = () => {
   }]);
  
  // This is a FormEvent type 
-  const onFormSubmit =(event:React.FormEvent) => {
+  const onFormSubmit =async (event:React.FormEvent) => {
 
     event.preventDefault();
-    
-    const latestNote ={
-       content:newNote,
-      id:getNextId(notes.map(note => note.id))
-      }
 
-    setNotes(notes.concat(latestNote))
-    
-    // clear the note
-    setNewNote('')
+    try{
+          
+      const createdNote = await createNote({content:newNote}) ;
+      
+      setNotes(notes.concat(createdNote))
+        
+        // clear the note
+      setNewNote('');
+    }
+    catch(err){
+       let errorMessage="Error : "
 
-   
+       if(err instanceof Error){
+
+          errorMessage+=err.message
+       }
+
+       console.error(errorMessage)
+      
+    }
+    
+
+     
   }
   return (
    <div style={{padding:"2rem"}}>  
