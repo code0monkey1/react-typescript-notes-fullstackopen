@@ -68,3 +68,8 @@ useState<never[]>(initialState: never[] | (() => never[])):
 ### Using Axios with React-Typescript .
 
 >Just like `useState` also `axios.get` is a generic function.
+>
+>But ,Unlike some generic functions, the type parameter of axios.get has a default value **`any`** so, if the function is used without defining the type parameter, the type of the response data will be any.
+>
+>So , it's not able to infer the return type of data, hence you have to provide that explicitly 
+
