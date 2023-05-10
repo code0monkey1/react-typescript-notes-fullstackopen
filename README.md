@@ -71,8 +71,10 @@ useState<never[]>(initialState: never[] | (() => never[])):
 >
 >But ,Unlike some generic functions, the type parameter of axios.get has a default value **`any`** so, if the function is used without defining the type parameter, the type of the response data will be any.
 >
->Giving a type parameter to axios.get is a potentially dangerous thing to do. 
->Putting a type on an axios get function , like so:
+>Giving a type parameter to axios.get is a **potentially dangerous thing** to do. 
+
+_Putting a type on an axios get function , like so:_  
+
   ```javascript
         axios
           .get<Note[]>('http://localhost:3001/notes')
@@ -81,23 +83,28 @@ useState<never[]>(initialState: never[] | (() => never[])):
                   })`
     
   ```
-> Is equivalent to writing something like this :
+_Is equivalent to writing something like this :_   
+  
   ```javascript
-      useEffect(() => {
-    axios.get('http://localhost:3001/notes').then(response => {
+ 
+    axios
+    .get('http://localhost:3001/notes')
+    .then(response => {
       // response.body is of type any
-      setNotes(response.data as Note[])
+      setNotes(response.data as Note[]) // type assertion ( dangerous action)
     })
-  }, [])
+
   ```
 
-> I.E : you're explicitly asserting the type to be Note , but you don't know if what you've got is a Note type !! 
+> I.E : you're explicitly asserting the type to be Note , but you don't know if what you've got is a Note type . So , when you go to use it ,and it's of a different type...    **You'll run into unexpected errors** 
  
 > **We should prepare for surprises and parse the response data in the frontend similarly that we did in the previous section for the requests to the backend.** 
 >    
 > 
-> _Like So :_
-> ```javascript
+
+_Like So :_
+
+ ```javascript
         export const isArrayOfNotes =(arr:unknown[]):arr is Array<Note> =>{
       
            arr.forEach( (note:unknown )=> {
