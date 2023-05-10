@@ -2,16 +2,30 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './App.css';
 import { Note } from './types';
-import { getNextId } from './utils';
+import { getNextId, isArrayOfNotes } from './utils';
 
 const App = () => {
   // ...
   useEffect(() => {
     axios
-    .get('https://641fef8182bea25f6df72478.mockapi.io/api/v1/notes')
+    .get<Note[]>('https://641fef8182bea25f6df72478.mockapi.io/api/v1/notes')
     .then(response => {
       console.log(response.data);
+
+      if(!isArrayOfNotes(response.data)) {
+         throw new Error("Date received is not an array of Notes"+
+         JSON.stringify(response.data,null,2));
+      }
+      
       setNotes(response.data);
+    }).catch(err => {
+        let errorMessage="Error : " 
+
+        if(err instanceof Error){
+          errorMessage+=err.message
+        }
+
+        console.error(errorMessage);
     })
   }, [])
   // ...
