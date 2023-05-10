@@ -66,12 +66,15 @@ useState<never[]>(initialState: never[] | (() => never[])):
 ```
 
 ### Using Axios with React-Typescript .
+> _Its it especially important to check the validity of the data type received at the frontend if the data is from an external api. But if it's from your own backend, you could perhaps cast it explicitly to your type ,if the type validation is taken care of properly at the backend._
 
 >Just like `useState` also `axios.get` is a generic function.
 >
 >But ,Unlike useState ( which has `never` ), the type parameter of `axios.get` has a default value **`any`** so, if the function is used without defining the type parameter, the type of the response data will be any ( and will not cause error if not explicitly defined).
 >
 >However, giving a `type` parameter to axios.get is a **potentially dangerous thing** to do. 
+
+
 
 _Putting a type on an axios get function , like so:_  
 
