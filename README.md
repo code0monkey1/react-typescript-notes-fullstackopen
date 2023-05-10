@@ -69,9 +69,9 @@ useState<never[]>(initialState: never[] | (() => never[])):
 
 >Just like `useState` also `axios.get` is a generic function.
 >
->But ,Unlike some generic functions, the type parameter of axios.get has a default value **`any`** so, if the function is used without defining the type parameter, the type of the response data will be any.
+>But ,Unlike useState ( which has `never` ), the type parameter of `axios.get` has a default value **`any`** so, if the function is used without defining the type parameter, the type of the response data will be any ( and will not cause error if not explicitly defined).
 >
->Giving a type parameter to axios.get is a **potentially dangerous thing** to do. 
+>However, giving a `type` parameter to axios.get is a **potentially dangerous thing** to do. 
 
 _Putting a type on an axios get function , like so:_  
 
