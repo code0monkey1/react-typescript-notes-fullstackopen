@@ -1,10 +1,10 @@
 
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './App.css';
 import { createNote, getAllNotes } from './services/noteService';
 import { Note } from './types';
 import { isArrayOfNotes } from './utils';
-
 
 const App = () => {
   // ...
@@ -16,23 +16,17 @@ const App = () => {
 
           const data = await getAllNotes();
 
-           if(!(data instanceof Array) || !isArrayOfNotes(data)) {
-            throw new Error("Date received is not an array of Notes"+
-            JSON.stringify(data,null,2));
-          }
-
           setNotes(data);
 
         }catch(err){
 
           let errorMessage="Error : " 
 
-          if(err instanceof Error){
-            errorMessage+=err.message
-          }
-
-          console.error(errorMessage);
-          }
+         if(axios.isAxiosError(err))
+            errorMessage+=err.response?.data
+  
+           console.error(errorMessage)
+        }
 
     }
     getNotes();
@@ -62,16 +56,15 @@ const App = () => {
     catch(err){
        let errorMessage="Error : "
 
-       if(err instanceof Error){
+      
+       if(axios.isAxiosError(err)){
 
-          errorMessage+=err.message
+        errorMessage+=err.response?.data
        }
 
        console.error(errorMessage)
       
     }
-    
-
      
   }
   return (
