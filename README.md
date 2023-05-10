@@ -71,5 +71,25 @@ useState<never[]>(initialState: never[] | (() => never[])):
 >
 >But ,Unlike some generic functions, the type parameter of axios.get has a default value **`any`** so, if the function is used without defining the type parameter, the type of the response data will be any.
 >
->So , it's not able to infer the return type of data, hence you have to provide that explicitly 
+>Giving a type parameter to axios.get is a potentially dangerous thing to do. 
+>Putting a type on an axios get function , like so:
+  ```javascript
+        axios
+          .get<Note[]>('http://localhost:3001/notes')
+          .then(response => {
+                    setNotes(response.data)
+                  })`
+    
+  ```
+> Is equivalent to writing something like this :
+  ```javascript
+      useEffect(() => {
+    axios.get('http://localhost:3001/notes').then(response => {
+      // response.body is of type any
+      setNotes(response.data as Note[])
+    })
+  }, [])
+  ```
 
+> I.E : you're explicitly asserting the type to be Note , but you don't know if what you've got is a Note type !! 
+ 
